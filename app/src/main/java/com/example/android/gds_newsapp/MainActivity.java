@@ -14,12 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create the list of stories
-        ArrayList<Story> stories = new ArrayList<>();
-        stories.add(new Story("test", "test", "test"));
-        stories.add(new Story("test", "test", "test"));
-        stories.add(new Story("test", "test", "test"));
-        stories.add(new Story("test", "test", "test"));
-        stories.add(new Story("test", "test", "test"));
+        ArrayList<Story> stories = QueryUtils.extractStories();
 
         // Find the listView in the layout
         ListView storiesList = (ListView) findViewById(R.id.list);

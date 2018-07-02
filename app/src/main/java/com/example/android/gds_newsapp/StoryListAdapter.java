@@ -49,7 +49,7 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
                 itemSection.setText(currentStory.getSectionName());
                 if(authorsHolder != null) {
                     if (authorsHolder.size() > 0){
-                        String authorsString = String.join(",", authorsHolder);
+                        String authorsString = String.join(", ", authorsHolder);
                         itemAuthor.setText(authorsString);
                     }
                 }
