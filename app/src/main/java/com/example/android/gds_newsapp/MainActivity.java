@@ -1,11 +1,9 @@
 package com.example.android.gds_newsapp;
-
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     /** URL to query the Guardian API for Brexit News articles */
     private static final String GUARDIAN_REQUEST_URL =
-            "";
+            "\n" +
+                    "https://content.guardianapis.com/search?show-tags=contributor&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
 
 
     @Override
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void updateUI (ArrayList<Story> stories){
+
         // Find the listView in the layout
         ListView storiesList = (ListView) findViewById(R.id.list);
 
