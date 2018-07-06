@@ -41,7 +41,8 @@ public final class QueryUtils {
                 JSONObject storyElem = (JSONObject) results.get(i);
                 String webTitle = storyElem.getString("webTitle");
                 String sectionName = storyElem.getString("sectionName");
-                String webPublicationDate = storyElem.getString("webPublicationDate");
+                String rawWebPublicationDate = storyElem.getString("webPublicationDate");
+                String parsedPublicationDate = HelperUtils.parseDateString(rawWebPublicationDate);
                 String webUrl = storyElem.getString("webUrl");
                 JSONArray tags = storyElem.getJSONArray("tags");
                 ArrayList<String> authors = new ArrayList<>();
@@ -57,7 +58,7 @@ public final class QueryUtils {
 
                 // Parse the data into Story objects
                 Story parsedStory = new Story(webTitle, sectionName, webUrl,
-                        authors, webPublicationDate);
+                        authors, parsedPublicationDate);
                 storiesHolder.add(parsedStory);
             }
             return storiesHolder;
