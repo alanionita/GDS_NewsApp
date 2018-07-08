@@ -16,6 +16,17 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+// TODO: Refactor to use loaders for: downloading stories
+// TODO: Refactor to use loaders for: downloading avatars
+// TODO: Add state to the app for: no items in list
+// TODO: Add state to the app for: fetching data (progressBar)
+// TODO: Add state to the app for: no internet connection
+// TODO: Check code formatting, fix errors, optimise imports
+// TODO: Optimise build
+// TODO: Write a professional README
+// TODO: Optional: change the name in the AppBar from project name to 'News'
+// TODO: Optional: Add API_key to a config file (env variable)
+
 public class MainActivity extends AppCompatActivity {
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
