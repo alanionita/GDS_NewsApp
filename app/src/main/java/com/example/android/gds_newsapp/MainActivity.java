@@ -1,22 +1,13 @@
 package com.example.android.gds_newsapp;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+
+import android.app.LoaderManager;
+import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
+
 import java.util.ArrayList;
 
-// TODO: Refactor to use loaders for: downloading stories
 // TODO: Refactor to use loaders for: downloading avatars
 // TODO: Add state to the app for: no items in list
 // TODO: Add state to the app for: fetching data (progressBar)
@@ -27,137 +18,57 @@ import java.util.ArrayList;
 // TODO: Optional: change the name in the AppBar from project name to 'News'
 // TODO: Optional: Add API_key to a config file (env variable)
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity
+        extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<ArrayList<Story>> {
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     /** URL to query the Guardian API for Brexit News articles */
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
 
+    // Global for the story loader ID
+    private static final int STORY_LOADER_ID = 1;
+    // Global for listAdaptor
+    private StoryListAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kick off an {@link AsyncTask} to perform the network request
-        StoriesAsyncTask task = new StoriesAsyncTask();
-        task.execute();
-    }
-
-    protected void updateUI (ArrayList<Story> stories){
-
         // Find the listView in the layout
-        ListView storiesList = (ListView) findViewById(R.id.list);
+        ListView storiesList = findViewById(R.id.list);
+        assert storiesList != null;
 
-        // Create a new StoryListAdapter
-        StoryListAdapter adapter = new StoryListAdapter(this, stories);
+        // Create and set a new StoryListAdapter
+        listAdapter = new StoryListAdapter(this, new ArrayList<Story>());
+        storiesList.setAdapter(listAdapter);
 
-        // Set adapter on ListView
-        storiesList.setAdapter(adapter);
+        // Start LoaderManager and initialise loader
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(STORY_LOADER_ID, null, this);
     }
 
-    /**
-     * {@link AsyncTask} to perform the network request on a background thread, and then
-     * update the UI with the Brexit stories in the response.
-     */
-    private class StoriesAsyncTask extends AsyncTask<URL, Void, ArrayList<Story>> {
+    @Override
+    public Loader<ArrayList<Story>> onCreateLoader(int i, Bundle bundle) {
+        return new StoryLoader(this, GUARDIAN_REQUEST_URL);
+    }
 
-        @Override
-        protected ArrayList<Story> doInBackground(URL... urls) {
-            // Create URL object
-            URL url = createUrl(GUARDIAN_REQUEST_URL);
+    @Override
+    public void onLoadFinished(
+            Loader<ArrayList<Story>> loader,
+            ArrayList<Story> stories) {
 
-            // Perform HTTP request to the URL and receive a JSON response back
-            String jsonResponse = "";
-            try {
-                jsonResponse = makeHttpRequest(url);
-            } catch (IOException e) {
-                Log.e("IOException","IOException logged!", e);
-            }
-            return QueryUtils.extractStory(jsonResponse);
-        }
+        listAdapter.clear();
 
-        /**
-         * Update the screen with the given earthquake (which was the result of the
-         * {@link StoriesAsyncTask}).
-         */
-        @Override
-        protected void onPostExecute(ArrayList<Story> stories) {
-            if (stories == null || stories.size() == 0) {
-                return;
-            }
-            // Update the UI
-            updateUI(stories);
-        }
-
-        /**
-         * Make an HTTP request to the given URL and return a String as the response.
-         */
-        private String makeHttpRequest(URL url) throws IOException {
-            String jsonResponse = "";
-            HttpURLConnection urlConnection = null;
-            InputStream inputStream = null;
-
-            if(url == null) {
-                return jsonResponse;
-            }
-
-            try {
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setReadTimeout(10000 /* milliseconds */);
-                urlConnection.setConnectTimeout(15000 /* milliseconds */);
-                urlConnection.connect();
-                if (urlConnection.getResponseCode() == 200) {
-                    inputStream = urlConnection.getInputStream();
-                    jsonResponse = readFromStream(inputStream);
-                } else {
-                    Log.e(LOG_TAG, "Error response code " + urlConnection.getResponseCode());
-                }
-            } catch (IOException e) {
-                Log.e("IOException", "IOException thrown!", e);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (inputStream != null) {
-                    // function must handle java.io.IOException here
-                    inputStream.close();
-                }
-            }
-            return jsonResponse;
-        }
-
-        /**
-         * Convert the {@link InputStream} into a String which contains the
-         * whole JSON response from the server.
-         */
-        private String readFromStream(InputStream inputStream) throws IOException {
-            StringBuilder output = new StringBuilder();
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null) {
-                    output.append(line);
-                    line = reader.readLine();
-                }
-            }
-            return output.toString();
+        if (stories != null && !stories.isEmpty()) {
+            listAdapter.addAll(stories);
         }
     }
 
-    /**
-     * Returns new URL object from the given string URL.
-     */
-    public URL createUrl(String stringUrl) {
-        URL url = null;
-        try {
-            url = new URL(stringUrl);
-        } catch (MalformedURLException exception) {
-            Log.e(LOG_TAG, "Error with creating URL", exception);
-            return null;
-        }
-        return url;
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Story>> loader) {
+        listAdapter.clear();
     }
 }
