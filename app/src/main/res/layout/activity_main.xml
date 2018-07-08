@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:divider="@null"
-    android:dividerHeight="10dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:background="?android:selectableItemBackground"/>
+    tools:context="com.example.android.gds_newsapp.MainActivity"
+    style="@style/ListViewStyle" />
 
 

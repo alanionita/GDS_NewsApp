@@ -61,7 +61,7 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
             if (currentStory != null) {
                 ArrayList<String> authorsHolder = currentStory.getAuthors();
                 String datePubHolder = currentStory.getWebPublicationDate();
-
+                Log.i("title", currentStory.getWebTitle());
                 itemTitle.setText(currentStory.getWebTitle());
                 itemSection.setText(currentStory.getSectionName());
                 if (authorsHolder != null) {
