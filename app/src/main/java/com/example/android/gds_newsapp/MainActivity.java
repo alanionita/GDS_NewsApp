@@ -5,6 +5,7 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,12 @@ public class MainActivity
 
     // Global for the story loader ID
     private static final int STORY_LOADER_ID = 1;
+
     // Global for listAdaptor
     private StoryListAdapter listAdapter;
+
+    // Global for stateTextView
+    TextView stateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,10 @@ public class MainActivity
         // Find the listView in the layout
         ListView storiesList = findViewById(R.id.list);
         assert storiesList != null;
+
+        // Get stateTextView
+        stateTextView = findViewById(R.id.state_textView);
+        storiesList.setEmptyView(stateTextView);
 
         // Create and set a new StoryListAdapter
         listAdapter = new StoryListAdapter(this, new ArrayList<Story>());
@@ -59,11 +68,11 @@ public class MainActivity
     public void onLoadFinished(
             Loader<ArrayList<Story>> loader,
             ArrayList<Story> stories) {
-
+        stateTextView.setText(R.string.no_data_in_list);
         listAdapter.clear();
 
         if (stories != null && !stories.isEmpty()) {
-            listAdapter.addAll(stories);
+//            listAdapter.addAll(stories);
         }
     }
 

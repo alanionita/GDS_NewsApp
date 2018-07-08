@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GDS_NewsApp</string>
+    <string name="no_data_in_list">The list has no data.</string>
 </resources>
