@@ -1,4 +1,6 @@
 package com.example.android.gds_newsapp;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,10 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     /** URL to query the Guardian API for Brexit News articles */
-    private static final String GUARDIAN_REQUEST_URL =
-            "\n" +
-                    "https://content.guardianapis.com/search?show-tags=contributor&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
-
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +80,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /**
-         * Returns new URL object from the given string URL.
-         */
-        private URL createUrl(String stringUrl) {
-            URL url = null;
-            try {
-                url = new URL(stringUrl);
-            } catch (MalformedURLException exception) {
-                Log.e(LOG_TAG, "Error with creating URL", exception);
-                return null;
-            }
-            return url;
-        }
-
-        /**
          * Make an HTTP request to the given URL and return a String as the response.
          */
         private String makeHttpRequest(URL url) throws IOException {
@@ -149,5 +134,19 @@ public class MainActivity extends AppCompatActivity {
             }
             return output.toString();
         }
+    }
+
+    /**
+     * Returns new URL object from the given string URL.
+     */
+    public URL createUrl(String stringUrl) {
+        URL url = null;
+        try {
+            url = new URL(stringUrl);
+        } catch (MalformedURLException exception) {
+            Log.e(LOG_TAG, "Error with creating URL", exception);
+            return null;
+        }
+        return url;
     }
 }

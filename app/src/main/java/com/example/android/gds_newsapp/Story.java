@@ -1,5 +1,7 @@
 package com.example.android.gds_newsapp;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class Story {
     final String webUrl;
     final ArrayList<String> authors;
     final String webPublicationDate;
+    final String authorAvatar;
 
     public Story(String title, String section, String url) {
         this.webTitle = title;
@@ -21,6 +24,7 @@ public class Story {
         this.webUrl = url;
         this.authors = null;
         this.webPublicationDate = null;
+        this.authorAvatar = null;
     }
 
     public Story(String title, String section, String webUrl, ArrayList<String> authorTags ) {
@@ -29,14 +33,17 @@ public class Story {
         this.webUrl = webUrl;
         this.authors = authorTags;
         this.webPublicationDate = null;
+        this.authorAvatar = null;
     }
 
-    public Story(String title, String section, String webUrl, ArrayList<String> authors, String webPublicationDate) {
+    public Story(String title, String section, String webUrl, ArrayList<String> authors,
+                 String webPublicationDate, String avatarURL) {
         this.webTitle = title;
         this.sectionName = section;
         this.authors = authors;
         this.webPublicationDate = webPublicationDate;
         this.webUrl = webUrl;
+        this.authorAvatar = avatarURL;
     }
 
     public String getWebTitle() {
@@ -58,4 +65,6 @@ public class Story {
     public String getWebPublicationDate() {
         return webPublicationDate;
     }
+
+    public String getAuthorAvatar() { return authorAvatar; }
 }

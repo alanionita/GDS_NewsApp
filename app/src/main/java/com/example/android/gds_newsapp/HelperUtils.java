@@ -8,7 +8,7 @@ import java.util.Locale;
 public class HelperUtils {
     public static String parseDateString(String date) {
         SimpleDateFormat inputFormat  = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE dd MMMM yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm EEEE dd MMMM");
 
         try {
             Date parsedDate = inputFormat.parse(date);
