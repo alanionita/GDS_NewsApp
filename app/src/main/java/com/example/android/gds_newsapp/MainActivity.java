@@ -1,7 +1,10 @@
 package com.example.android.gds_newsapp;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -11,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 // TODO: Refactor to use loaders for: downloading avatars
-// TODO: Add state to the app for: no internet connection
 // TODO: Check code formatting, fix errors, optimise imports
 // TODO: Optimise build
 // TODO: Write a professional README
@@ -30,6 +32,7 @@ public class MainActivity
     private StoryListAdapter listAdapter;
     private TextView stateTextView;
     private ProgressBar progressBar;
+    private boolean isConnected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +50,28 @@ public class MainActivity
         // Get ProgressBar
         progressBar = findViewById(R.id.indeterminateBar);
 
+        // Checks for internet connectivity
+        ConnectivityManager cm =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        assert cm != null;
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
         // Create and set a new StoryListAdapter
         listAdapter = new StoryListAdapter(this, new ArrayList<Story>());
         storiesList.setAdapter(listAdapter);
 
         // Start LoaderManager and initialise loader
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(STORY_LOADER_ID, null, this);
+        if (isConnected) {
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.initLoader(STORY_LOADER_ID, null, this);
+        } else {
+            progressBar.setVisibility(ProgressBar.GONE);
+            stateTextView.setText(R.string.no_internet);
+        }
+
     }
 
     @Override
