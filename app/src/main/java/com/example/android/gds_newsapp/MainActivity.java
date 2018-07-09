@@ -16,11 +16,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
-// TODO: Refactor to use loaders for: downloading avatars
-// TODO: Check code formatting, fix errors, optimise imports
-// TODO: Optimise build
-// TODO: Write a professional README
-
 public class MainActivity
         extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<ArrayList<Story>> {
