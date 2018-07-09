@@ -5,13 +5,12 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 // TODO: Refactor to use loaders for: downloading avatars
-// TODO: Add state to the app for: no items in list
-// TODO: Add state to the app for: fetching data (progressBar)
 // TODO: Add state to the app for: no internet connection
 // TODO: Check code formatting, fix errors, optimise imports
 // TODO: Optimise build
@@ -25,17 +24,12 @@ public class MainActivity
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    /** URL to query the Guardian API for Brexit News articles */
+    // Local Globals
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
-
-    // Global for the story loader ID
     private static final int STORY_LOADER_ID = 1;
-
-    // Global for listAdaptor
     private StoryListAdapter listAdapter;
-
-    // Global for stateTextView
-    TextView stateTextView;
+    private TextView stateTextView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +40,12 @@ public class MainActivity
         ListView storiesList = findViewById(R.id.list);
         assert storiesList != null;
 
-        // Get stateTextView
+        // Get stateTextView and set list empty view to it
         stateTextView = findViewById(R.id.state_textView);
         storiesList.setEmptyView(stateTextView);
+
+        // Get ProgressBar
+        progressBar = findViewById(R.id.indeterminateBar);
 
         // Create and set a new StoryListAdapter
         listAdapter = new StoryListAdapter(this, new ArrayList<Story>());
@@ -61,6 +58,7 @@ public class MainActivity
 
     @Override
     public Loader<ArrayList<Story>> onCreateLoader(int i, Bundle bundle) {
+        progressBar.setVisibility(ProgressBar.VISIBLE);
         return new StoryLoader(this, GUARDIAN_REQUEST_URL);
     }
 
@@ -68,11 +66,12 @@ public class MainActivity
     public void onLoadFinished(
             Loader<ArrayList<Story>> loader,
             ArrayList<Story> stories) {
+        progressBar.setVisibility(ProgressBar.GONE);
         stateTextView.setText(R.string.no_data_in_list);
         listAdapter.clear();
 
         if (stories != null && !stories.isEmpty()) {
-//            listAdapter.addAll(stories);
+            listAdapter.addAll(stories);
         }
     }
 
