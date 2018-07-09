@@ -12,12 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // TODO: Refactor to use loaders for: downloading avatars
 // TODO: Check code formatting, fix errors, optimise imports
 // TODO: Optimise build
 // TODO: Write a professional README
-// TODO: Optional: change the name in the AppBar from project name to 'News'
 // TODO: Optional: Add API_key to a config file (env variable)
 
 public class MainActivity
@@ -38,6 +38,9 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Get the actionBar and set to a different title
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_title);
 
         // Find the listView in the layout
         ListView storiesList = findViewById(R.id.list);
