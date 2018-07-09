@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -18,7 +20,6 @@ import java.util.Objects;
 // TODO: Check code formatting, fix errors, optimise imports
 // TODO: Optimise build
 // TODO: Write a professional README
-// TODO: Optional: Add API_key to a config file (env variable)
 
 public class MainActivity
         extends AppCompatActivity
@@ -34,6 +35,7 @@ public class MainActivity
     private ProgressBar progressBar;
     private boolean isConnected;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -81,7 +81,7 @@ public final class QueryUtils {
                 String webUrl = storyElem.getString("webUrl");
                 JSONArray tags = storyElem.getJSONArray("tags");
                 ArrayList<String> authors = new ArrayList<>();
-                String authorAvatarURL = null;
+                String authorAvatarURL;
                 Bitmap authorAvatar = null;
 
                 // Finds authors if tag object is present
@@ -90,13 +90,14 @@ public final class QueryUtils {
                         JSONObject individualTag = (JSONObject) tags.get(j);
                         String author = individualTag.getString("webTitle");
                         authorAvatarURL = individualTag.getString("bylineImageUrl");
+                        authorAvatar = fetchImageBitmap(authorAvatarURL);
                         authors.add(author);
                     }
                 }
 
                 // Parse the data into Story objects
                 Story parsedStory = new Story(webTitle, sectionName, webUrl,
-                        authors, parsedPublicationDate, authorAvatarURL);
+                        authors, parsedPublicationDate, authorAvatar);
                 storiesHolder.add(parsedStory);
             }
             return storiesHolder;
@@ -196,5 +197,16 @@ public final class QueryUtils {
             }
             return null;
         }
+    }
+
+    private static Bitmap fetchImageBitmap(String url) {
+        try {
+            InputStream in = new java.net.URL(url).openStream();
+            return BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 }

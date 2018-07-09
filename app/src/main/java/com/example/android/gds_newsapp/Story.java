@@ -2,8 +2,6 @@ package com.example.android.gds_newsapp;
 
 import android.graphics.Bitmap;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 
 /**
@@ -11,12 +9,12 @@ import java.util.ArrayList;
  */
 
 public class Story {
-    final String webTitle;
-    final String sectionName;
-    final String webUrl;
-    final ArrayList<String> authors;
-    final String webPublicationDate;
-    final String authorAvatar;
+    private String webTitle;
+    private String sectionName;
+    private String webUrl;
+    private ArrayList<String> authors;
+    private String webPublicationDate;
+    private Bitmap authorAvatar;
 
     public Story(String title, String section, String url) {
         this.webTitle = title;
@@ -37,13 +35,13 @@ public class Story {
     }
 
     public Story(String title, String section, String webUrl, ArrayList<String> authors,
-                 String webPublicationDate, String avatarURL) {
+                 String webPublicationDate, Bitmap downloadedAuthorAvatar) {
         this.webTitle = title;
         this.sectionName = section;
         this.authors = authors;
         this.webPublicationDate = webPublicationDate;
         this.webUrl = webUrl;
-        this.authorAvatar = avatarURL;
+        this.authorAvatar = downloadedAuthorAvatar;
     }
 
     public String getWebTitle() {
@@ -66,5 +64,7 @@ public class Story {
         return webPublicationDate;
     }
 
-    public String getAuthorAvatar() { return authorAvatar; }
+    public Bitmap getAuthorAvatar() {
+        return authorAvatar;
+    }
 }

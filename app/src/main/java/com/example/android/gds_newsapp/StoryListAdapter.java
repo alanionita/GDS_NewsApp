@@ -3,8 +3,10 @@ package com.example.android.gds_newsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +22,11 @@ import java.util.ArrayList;
  */
 
 public class StoryListAdapter extends ArrayAdapter<Story> {
-    public StoryListAdapter(@NonNull Context context, ArrayList<Story> stories) {
+    StoryListAdapter(@NonNull Context context, ArrayList<Story> stories) {
         super(context, 0, stories);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -57,12 +60,8 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
                     if (authorsHolder.size() > 0) {
                         String authorsString = String.join(", ", authorsHolder);
                         itemAuthor.setText(authorsString);
-                        Log.i("outside if authorAvatar", currentStory.getAuthorAvatar());
-                        if (currentStory.getAuthorAvatar() != null ||
-                                currentStory.getAuthorAvatar().length() > 0) {
-                            new QueryUtils.DownloadImageTask(authorAvatar).execute(
-                                    currentStory.getAuthorAvatar()
-                            );
+                        if (currentStory.getAuthorAvatar() != null) {
+                            authorAvatar.setImageBitmap(currentStory.getAuthorAvatar());
                         }
                     }
                 }
