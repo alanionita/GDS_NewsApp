@@ -3,10 +3,9 @@ package com.example.android.gds_newsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
         super(context, 0, stories);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -58,7 +56,7 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
                 itemSection.setText(currentStory.getSectionName());
                 if (authorsHolder != null) {
                     if (authorsHolder.size() > 0) {
-                        String authorsString = String.join(", ", authorsHolder);
+                        String authorsString = TextUtils.join(", ", authorsHolder);
                         itemAuthor.setText(authorsString);
                         if (currentStory.getAuthorAvatar() != null) {
                             authorAvatar.setImageBitmap(currentStory.getAuthorAvatar());
