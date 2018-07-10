@@ -23,7 +23,7 @@ A good way to prove knowledge of HTTP Networking in Android as well as a firm gr
 The Guardian's News API used in the following formats
 
 ```
-http://content.guardianapis.com/search?q=debates&api-key=test)
+http://content.guardianapis.com/search?q=debates&api-key=test
 ```
 
 ```
