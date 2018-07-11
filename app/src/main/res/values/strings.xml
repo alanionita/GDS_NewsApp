@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">GDS_NewsApp</string>
-    <string name="no_data_in_list">The list has no data.</string>
+    <string name="no_data_in_list">Hmmm...
+        \n
+        \nit\'s a slow news day
+        \n
+        \nwe\'ve got nothing new to show you.
+        \n
+        \n
+        \nTake a stroll and come back us later.
+        \n
+        \nCat gifs also work, but you do you :D</string>
     <string name="no_internet">No internet connection detected.</string>
     <string name="app_title">Brexit News</string>
 </resources>

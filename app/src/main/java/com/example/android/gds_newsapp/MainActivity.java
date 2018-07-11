@@ -40,11 +40,11 @@ public class MainActivity
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_title);
 
         // Find the listView in the layout
-        ListView storiesList = findViewById(R.id.list);
+        ListView storiesList = findViewById(R.id.ListView_list_view);
         assert storiesList != null;
 
         // Get stateTextView and set list empty view to it
-        stateTextView = findViewById(R.id.state_textView);
+        stateTextView = findViewById(R.id.TextView_state_text_view);
         storiesList.setEmptyView(stateTextView);
 
         // Get ProgressBar

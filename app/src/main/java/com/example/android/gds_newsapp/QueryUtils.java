@@ -39,13 +39,6 @@ public final class QueryUtils {
     }
 
     public static ArrayList<Story> fetchStoryData(String requestUrl) {
-        // Adds a delay to test the loader works
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -177,6 +170,17 @@ public final class QueryUtils {
         return output.toString();
     }
 
+    private static Bitmap fetchImageBitmap(String url) {
+        try {
+            InputStream in = new java.net.URL(url).openStream();
+            return BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static class DownloadImageTask extends AsyncTask<String, Void, ImageView> {
         @SuppressLint("StaticFieldLeak")
         ImageView imageViewHolder;
@@ -197,16 +201,5 @@ public final class QueryUtils {
             }
             return null;
         }
-    }
-
-    private static Bitmap fetchImageBitmap(String url) {
-        try {
-            InputStream in = new java.net.URL(url).openStream();
-            return BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
     }
 }

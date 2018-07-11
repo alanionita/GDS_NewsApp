@@ -42,11 +42,11 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
                     false);
 
             // Find views from list_item layout
-            itemTitle = convertView.findViewById(R.id.web_title);
-            itemSection = convertView.findViewById(R.id.section_name);
-            itemAuthor = convertView.findViewById(R.id.authors);
-            itemPublishDate = convertView.findViewById(R.id.data_published);
-            authorAvatar = convertView.findViewById(R.id.avatar_image);
+            itemTitle = convertView.findViewById(R.id.TextView_title);
+            itemSection = convertView.findViewById(R.id.TextView_section_name);
+            itemAuthor = convertView.findViewById(R.id.TextView_authors);
+            itemPublishDate = convertView.findViewById(R.id.TextView_data_published);
+            authorAvatar = convertView.findViewById(R.id.ImageView_avatar_image);
 
             if (currentStory != null) {
                 ArrayList<String> authorsHolder = currentStory.getAuthors();

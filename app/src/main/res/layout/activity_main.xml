@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <ListView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/list"
+        android:id="@+id/ListView_list_view"
         style="@style/ListViewStyle"
         tools:context="com.example.android.gds_newsapp.MainActivity" />
 
     <TextView
-        android:id="@+id/state_textView"
+        android:id="@+id/TextView_state_text_view"
         style="@style/StateTextView" />
 
     <ProgressBar

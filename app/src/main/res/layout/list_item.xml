@@ -7,23 +7,23 @@
         style="@style/RelativeLayoutStyle">
 
         <TextView
-            android:id="@+id/section_name"
+            android:id="@+id/TextView_section_name"
             style="@style/SectionNameStyle"/>
 
         <TextView
-            android:id="@+id/web_title"
+            android:id="@+id/TextView_title"
             style="@style/TitleStyle" />
 
         <ImageView
-            android:id="@+id/avatar_image"
+            android:id="@+id/ImageView_avatar_image"
             style="@style/AvatarImageStyle" />
 
         <TextView
-            android:id="@+id/authors"
+            android:id="@+id/TextView_authors"
             style="@style/AuthorNameStyle"/>
 
         <TextView
-            android:id="@+id/data_published"
+            android:id="@+id/TextView_data_published"
             style="@style/DateStyle"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
