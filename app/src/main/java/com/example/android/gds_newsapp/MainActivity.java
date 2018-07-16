@@ -26,7 +26,7 @@ public class MainActivity
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     // Local Globals
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?page-size=50&show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
     private static final int STORY_LOADER_ID = 1;
     private StoryListAdapter listAdapter;
     private TextView stateTextView;
