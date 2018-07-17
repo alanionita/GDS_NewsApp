@@ -1,8 +1,12 @@
 # Google Developer Scholarship with Udacity
 
-## NewsApp v1 
+## NewsApp v1.1
 
-#### Version 1.0
+#### Version 1.1 aka Preferential
+
+![NewsApp v1.1 animation](http://g.recordit.co/Hur6GeDHA0.gif)
+
+#### Version 1.0 aka Base
 
 ![NewsApp v1 animation](http://g.recordit.co/wRxnBDKfam.gif)
 
@@ -42,6 +46,7 @@ This project is about combining various ideas and skills we’ve been practicing
 * How to provide snappy feedback to a user whilst the app is performing a task
 * Multi-threading and how to avoid memory leaks 
 * Using intents to open a link from a ListView item into the user's browser of choice
+* Creating a dynamic 'preferences screen' with preference summaries and the ability to change different preferences
 
 ### Extra challenges
 

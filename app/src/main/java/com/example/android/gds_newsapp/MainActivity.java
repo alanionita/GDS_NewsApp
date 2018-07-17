@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainActivity
         extends AppCompatActivity
@@ -46,7 +45,9 @@ public class MainActivity
         setContentView(R.layout.activity_main);
 
         // Get the actionBar and set to a different title
-        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_title);
+        }
 
         // Find the listView in the layout
         ListView storiesList = findViewById(R.id.ListView_list_view);
@@ -93,6 +94,12 @@ public class MainActivity
                 getString(R.string.settings_min_stories_key),
                 getString(R.string.settings_min_stories_default));
 
+        // get orderBy challenges
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
         // parse breaks apart the URI string that's passed into its parameter
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
 
@@ -101,7 +108,7 @@ public class MainActivity
 
         // Append query parameter and its value
         uriBuilder.appendQueryParameter("page-size", storyAmount);
-        uriBuilder.appendQueryParameter("order-by", "newest");
+        uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("show-elements", "image");
         uriBuilder.appendQueryParameter("q", "brexit");
