@@ -4,10 +4,13 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -26,7 +29,8 @@ public class MainActivity
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     // Local Globals
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?page-size=50&show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
+    // OLD API path "https://content.guardianapis.com/search?page-size=50&show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
     private static final int STORY_LOADER_ID = 1;
     private StoryListAdapter listAdapter;
     private TextView stateTextView;
@@ -80,7 +84,29 @@ public class MainActivity
     @Override
     public Loader<ArrayList<Story>> onCreateLoader(int i, Bundle bundle) {
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        return new StoryLoader(this, GUARDIAN_REQUEST_URL);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
+        String storyAmount = sharedPrefs.getString(
+                getString(R.string.settings_min_stories_key),
+                getString(R.string.settings_min_stories_default));
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value
+        uriBuilder.appendQueryParameter("page-size", storyAmount);
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("show-elements", "image");
+        uriBuilder.appendQueryParameter("q", "brexit");
+        uriBuilder.appendQueryParameter("api-key", "3d9afde5-908f-407e-a77c-c81994fc9bee");
+
+        // Return the completed uri `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmag=minMagnitude&orderby=time
+        return new StoryLoader(this, uriBuilder.toString());
+
     }
 
     @Override
