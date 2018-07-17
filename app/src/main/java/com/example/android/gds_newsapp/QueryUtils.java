@@ -82,8 +82,10 @@ public final class QueryUtils {
                     for (int j = 0; j < tags.length(); j++) {
                         JSONObject individualTag = (JSONObject) tags.get(j);
                         String author = individualTag.getString("webTitle");
-                        authorAvatarURL = individualTag.getString("bylineImageUrl");
-                        authorAvatar = fetchImageBitmap(authorAvatarURL);
+                        if (individualTag.has("bylineImageUrl")) {
+                            authorAvatarURL = individualTag.getString("bylineImageUrl");
+                            authorAvatar = fetchImageBitmap(authorAvatarURL);
+                        }
                         authors.add(author);
                     }
                 }

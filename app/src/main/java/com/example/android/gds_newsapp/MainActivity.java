@@ -8,10 +8,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +27,12 @@ public class MainActivity
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     // Local Globals
-    // OLD API path "https://content.guardianapis.com/search?page-size=50&show-tags=contributor&show-elements=image&q=brexit&api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
+    // OLD API path "https://content.guardianapis.com/search?
+    // page-size=50&
+    // show-tags=contributor&
+    // show-elements=image&
+    // q=brexit&
+    // api-key=3d9afde5-908f-407e-a77c-c81994fc9bee";
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
     private static final int STORY_LOADER_ID = 1;
     private StoryListAdapter listAdapter;
@@ -37,7 +40,6 @@ public class MainActivity
     private ProgressBar progressBar;
     private boolean isConnected;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,12 +101,13 @@ public class MainActivity
 
         // Append query parameter and its value
         uriBuilder.appendQueryParameter("page-size", storyAmount);
+        uriBuilder.appendQueryParameter("order-by", "newest");
         uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("show-elements", "image");
         uriBuilder.appendQueryParameter("q", "brexit");
         uriBuilder.appendQueryParameter("api-key", "3d9afde5-908f-407e-a77c-c81994fc9bee");
 
-        // Return the completed uri `http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmag=minMagnitude&orderby=time
+        // Return the completed uri
         return new StoryLoader(this, uriBuilder.toString());
 
     }
